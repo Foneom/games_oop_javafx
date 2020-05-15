@@ -75,4 +75,8 @@ public class LogicTest {
         };
         assertThat(logic.isWin(), is(false));
     }
+
+    @Test
+    public void isWin() {
+    }
 }
