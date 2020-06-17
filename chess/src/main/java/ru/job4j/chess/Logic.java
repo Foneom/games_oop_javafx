@@ -1,6 +1,5 @@
 package ru.job4j.chess;
 
-import javafx.scene.control.Alert;
 import ru.job4j.chess.ex.FigureNotFoundException;
 import ru.job4j.chess.ex.ImpossibleMoveException;
 import ru.job4j.chess.ex.OccupiedWayException;
@@ -8,7 +7,6 @@ import ru.job4j.chess.firuges.Cell;
 import ru.job4j.chess.firuges.Figure;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 /**
  * //TODO add comments.
@@ -42,7 +40,7 @@ public class Logic {
         if (this.isFree(steps)) {
             throw new OccupiedWayException("На пути другая фигура");
         }
-        if (!this.checkWay(source, dest, index)) {
+        if (!this.checkWay(steps)) {
             throw new ImpossibleMoveException("Невозможный ход");
         }
             this.figures[index] = this.figures[index].copy(dest);
@@ -65,21 +63,18 @@ public class Logic {
     }
     /**
      * Метод проверки правильности движения фигур согласно правилам игры
-     * @param source - начальное значение
-     * @param dest - конечное значение
-     * @param index - индекс ячейки
      * @return
      */
-    public boolean checkWay(Cell source, Cell dest, int index) {
-        boolean rst = false;
-        Cell[] steps = this.figures[index].way(source, dest);
-        if (steps.length > 0 && steps[steps.length - 1].equals(dest)) {
-            rst = true;
+    public boolean checkWay(Cell ... steps) {
+        boolean result = false;
+        for (Cell step : steps) {
+            if (steps.length > 0 && steps[steps.length - 1].equals(step)) {
+                result = true;
+                break;
+            }
         }
-        return rst;
+        return result;
     }
-
-
     public void clean() {
         for (int position = 0; position != this.figures.length; position++) {
             this.figures[position] = null;

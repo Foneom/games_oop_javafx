@@ -15,6 +15,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 public class LogicTest {
+
     /**
      * Тест на правильность движения слона по диагонали
      * Возвращает true при правильном движении
