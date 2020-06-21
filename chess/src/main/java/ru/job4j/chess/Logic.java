@@ -1,7 +1,6 @@
 package ru.job4j.chess;
 
 import ru.job4j.chess.ex.FigureNotFoundException;
-import ru.job4j.chess.ex.ImpossibleMoveException;
 import ru.job4j.chess.ex.OccupiedWayException;
 import ru.job4j.chess.firuges.Cell;
 import ru.job4j.chess.firuges.Figure;
@@ -31,7 +30,8 @@ public class Logic {
      * @throws FigureNotFoundException
      * @throws OccupiedWayException
      */
-    public boolean move(Cell source, Cell dest) throws ImpossibleMoveException, FigureNotFoundException, OccupiedWayException {
+    public boolean move(Cell source, Cell dest) throws FigureNotFoundException, OccupiedWayException {
+        boolean rst = false;
         int index = this.findBy(source);
         if (index == -1) {
             throw new FigureNotFoundException("Фигура не найдена");
@@ -40,12 +40,12 @@ public class Logic {
         if (this.isFree(steps)) {
             throw new OccupiedWayException("На пути другая фигура");
         }
-        if (!this.checkWay(steps)) {
-            throw new ImpossibleMoveException("Невозможный ход");
-        }
+        if (steps.length > 0 && steps[steps.length - 1].equals(dest)) {
+            rst = true;
             this.figures[index] = this.figures[index].copy(dest);
-            return true;
         }
+        return rst;
+    }
     /**
      * Метод проверки наличия на пути движения фигуры других фигур
      * @param cells
@@ -55,20 +55,6 @@ public class Logic {
         boolean result = false;
         for (Cell cell : cells) {
             if (findBy(cell) != -1) {
-                result = true;
-                break;
-            }
-        }
-        return result;
-    }
-    /**
-     * Метод проверки правильности движения фигур согласно правилам игры
-     * @return
-     */
-    public boolean checkWay(Cell ... steps) {
-        boolean result = false;
-        for (Cell step : steps) {
-            if (steps.length > 0 && steps[steps.length - 1].equals(step)) {
                 result = true;
                 break;
             }

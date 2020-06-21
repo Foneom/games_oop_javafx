@@ -13,7 +13,6 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import ru.job4j.chess.ex.FigureNotFoundException;
-import ru.job4j.chess.ex.ImpossibleMoveException;
 import ru.job4j.chess.ex.OccupiedWayException;
 import ru.job4j.chess.firuges.Cell;
 import ru.job4j.chess.firuges.Figure;
@@ -72,8 +71,6 @@ public class Chess extends Application {
                             rect.setY(((int) momento.getY() / 40) * 40 + 5);
                         }
                     } catch (OccupiedWayException e) {
-                        e.printStackTrace();
-                    } catch (ImpossibleMoveException e) {
                         e.printStackTrace();
                     } catch (FigureNotFoundException e) {
                         e.printStackTrace();
