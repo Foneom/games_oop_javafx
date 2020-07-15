@@ -26,31 +26,27 @@ public class Logic3T {
     }
 
     public boolean isWinnerX() {
-        return this.fillBy(Figure3T::hasMarkX, 0, 0, 1, 0) ||
-                this.fillBy(Figure3T::hasMarkX, 0, 0, 0, 1) ||
-                this.fillBy(Figure3T::hasMarkX, 0,0, 1, 1) ||
-                this.fillBy(Figure3T::hasMarkX, this.table.length - 1 , 0, -1, 1) ||
-                this.fillBy(Figure3T::hasMarkX, 1, 0, 0, 1) ||
-                this.fillBy(Figure3T::hasMarkX, 2, 0, 0, 1) ||
-                this.fillBy(Figure3T::hasMarkX, 0, 1 , 1, 0) ||
-                this.fillBy(Figure3T::hasMarkX, 0, 2, 1, 0);
+        return isWin(Figure3T::hasMarkX);
     }
 
     public boolean isWinnerO() {
-        return this.fillBy(Figure3T::hasMarkO, 0, 0, 1, 0) ||
-                this.fillBy(Figure3T::hasMarkO, 0, 0, 0, 1) ||
-                this.fillBy(Figure3T::hasMarkO, 0,0, 1, 1) ||
-                this.fillBy(Figure3T::hasMarkO, this.table.length - 1, 0, -1, 1) ||
-                this.fillBy(Figure3T::hasMarkO, 1, 0, 0, 1) ||
-                this.fillBy(Figure3T::hasMarkO, 2, 0, 0, 1) ||
-                this.fillBy(Figure3T::hasMarkO, 0, 1 , 1, 0) ||
-                this.fillBy(Figure3T::hasMarkO, 0, 2, 1, 0);
+        return isWin(Figure3T::hasMarkO);
+    }
+
+    public boolean isWin(Predicate<Figure3T> predicate) {
+        return this.fillBy(predicate, 0, 0, 1, 0) ||
+                this.fillBy(predicate, 0, 0, 0, 1) ||
+                this.fillBy(predicate, 0, 0, 1, 1) ||
+                this.fillBy(predicate, this.table.length - 1, 0, -1, 1) ||
+                this.fillBy(predicate, 1, 0, 0, 1) ||
+                this.fillBy(predicate, 2, 0, 0, 1) ||
+                this.fillBy(predicate, 0, 1, 1, 0) ||
+                this.fillBy(predicate, 0, 2, 1, 0);
     }
 
     public boolean hasGap() {
-        var result = Arrays.stream(this.table)
+        return Arrays.stream(this.table)
                 .flatMap(Stream::of)
                 .anyMatch(el -> !el.hasMarkX() && !el.hasMarkO());
-        return result;
     }
- }
+}
